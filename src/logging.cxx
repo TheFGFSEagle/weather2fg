@@ -1,46 +1,46 @@
 #include "logging.hxx"
 
-std::string string(FGaugeLogger::LogLevel level) {
+std::string to_string(Logger::LogLevel level) {
 	switch (level) {
-		case FGaugeLogger::LogLevel::DEBUG:
+		case Logger::LogLevel::DEBUG:
 			return {"DEBUG"};
-		case FGaugeLogger::LogLevel::INFO:
+		case Logger::LogLevel::INFO:
 			return {"INFO"};
-		case FGaugeLogger::LogLevel::WARNING:
+		case Logger::LogLevel::WARNING:
 			return {"WARNING"};
-		case FGaugeLogger::LogLevel::ERROR:
+		case Logger::LogLevel::ERROR:
 			return {"ERROR"};
-		case FGaugeLogger::LogLevel::FATAL:
+		case Logger::LogLevel::FATAL:
 			return {"FATAL"};
 		default:
 			return {"UNKNOWN"};
 	}
 }
 
-std::ostream& operator<<(std::ostream& s, FGaugeLogger::LogLevel level) {
-	s << string(level);
+std::ostream& operator<<(std::ostream& s, Logger::LogLevel level) {
+	s << to_string(level);
 	return s;
 }
 
-const FGaugeLogger::LogLevel FGaugeLogger::getLogLevelForString(std::string levelName) {
-	std::string upper = toUpper(levelName);
+const Logger::LogLevel Logger::get_loglevel_for_string(std::string levelName) {
+	std::string upper = to_upper(levelName);
 	if (upper == "DEBUG") {
-		return FGaugeLogger::LogLevel::DEBUG;
+		return Logger::LogLevel::DEBUG;
 	} else if (upper == "INFO") {
-		return FGaugeLogger::LogLevel::INFO;
+		return Logger::LogLevel::INFO;
 	} else if (upper == "WARNING") {
-		return FGaugeLogger::LogLevel::WARNING;
+		return Logger::LogLevel::WARNING;
 	} else if (upper == "ERROR") {
-		return FGaugeLogger::LogLevel::ERROR;
+		return Logger::LogLevel::ERROR;
 	} else if (upper == "FATAL") {
-		return FGaugeLogger::LogLevel::FATAL;
+		return Logger::LogLevel::FATAL;
 	} else {
-		return FGaugeLogger::LogLevel::UNKNOWN;
+		return Logger::LogLevel::UNKNOWN;
 	}
 }
 
-const FGaugeLogger::LogLevel FGaugeLogger::getLogLevelForString(char* levelName) {
+const Logger::LogLevel Logger::get_loglevel_for_string(char* levelName) {
 	std::string s(levelName);
-	return getLogLevelForString(s);
+	return get_loglevel_for_string(s);
 }
 

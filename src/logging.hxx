@@ -34,20 +34,20 @@ class Logger: public Singleton<Logger> {
 		}
 		friend std::ostream& operator<<(std::ostream&, Logger::LogLevel);
 		
-		static const LogLevel getLogLevelForString(std::string levelName);
-		static const LogLevel getLogLevelForString(char* levelName);
+		static const LogLevel get_loglevel_for_string(std::string levelName);
+		static const LogLevel get_loglevel_for_string(char* levelName);
 		
-		LogLevel logLevel() {
+		LogLevel loglevel() {
 			return _level;
 		}
-		void setLogLevel(LogLevel level) {
+		void set_loglevel(LogLevel level) {
 			_level = level;
 		}
-		void setLogLevel(std::string levelName) {
-			_level = getLogLevelForString(levelName);
+		void set_loglevel(std::string level_name) {
+			_level = get_loglevel_for_string(level_name);
 		}
-		void setLogLevel(char* levelName) {
-			_level = getLogLevelForString({levelName});
+		void set_loglevel(char* levelName) {
+			_level = get_loglevel_for_string({levelName});
 		}
 	
 	private:
@@ -56,13 +56,12 @@ class Logger: public Singleton<Logger> {
 
 std::ostream& operator<<(std::ostream& s, const Logger::LogLevel level);
 
-std::string string(Logger::LogLevel level);
+std::string to_string(Logger::LogLevel level);
 
 #define LOG(level, expr) \
 	{ \
 		std::stringstream ss; \
 		ss << expr; \
-		std::string str = ss.str(); \
 		Logger::instance()->log(Logger::LogLevel::level, ss.str()); \
 	}
 
