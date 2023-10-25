@@ -35,6 +35,7 @@ const Logger::LogLevel Logger::get_loglevel_for_string(std::string levelName) {
 	} else if (upper == "FATAL") {
 		return Logger::LogLevel::FATAL;
 	} else {
+		LOG(WARNING, "Unknown log level: " << levelName);
 		return Logger::LogLevel::UNKNOWN;
 	}
 }

@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 
@@ -12,12 +13,12 @@
 class Logger: public Singleton<Logger> {
 	public:
 		enum class LogLevel: short {
-			DEBUG = 0,
-			INFO = 1,
-			WARNING = 2,
-			ERROR = 3,
-			FATAL = 4,
-			UNKNOWN = 5,
+			UNKNOWN,
+			DEBUG,
+			INFO,
+			WARNING,
+			ERROR,
+			FATAL,
 		};
 		
 		Logger() {};
@@ -26,9 +27,9 @@ class Logger: public Singleton<Logger> {
 		void log(LogLevel level, const T& msg) {
 			if (level >= _level) {
 				if (level >= LogLevel::WARNING) {
-					std::cerr << "[" << level << "] " << strftime(std::time(nullptr), "%T") << " " << msg << std::endl;
+					std::cerr << std::left << std::setw(11) << (std::stringstream() << "[" << level << "]").str() << strftime(std::time(nullptr), "%T") << "  " << msg << std::endl;
 				} else {
-					std::cout << "[" << level << "] " << strftime(std::time(nullptr), "%T") << " " << msg << std::endl;
+					std::cout << std::left << std::setw(11) << (std::stringstream() << "[" << level << "]").str() << strftime(std::time(nullptr), "%T") << "  " << msg << std::endl;
 				}
 			}
 		}
