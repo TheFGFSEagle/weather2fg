@@ -49,10 +49,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
-    - uses: awalsh128/cache-apt-pkgs-action@latest
-      with:
-        packages: qtbase5-dev qttools5-dev libopenscenegraph-dev
-        version: 1.0
+    #- uses: awalsh128/cache-apt-pkgs-action@latest
+    #  with:
+    #    packages: qtbase5-dev qttools5-dev libopenscenegraph-dev
+    #    version: 1.0
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -70,14 +70,6 @@ jobs:
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ github.workspace }}
-
-    - name: Build osgQt
-      run: >
-        cmake --build ${{steps.strings.outputs.build-output-dir}}/3rdparty/osgQt --config ${{matrix.build_type}}
-
-    - name: Install osgQt
-      run: >
-        sudo cmake --install ${{steps.strings.outputs.build-output-dir}}/3rdparty/osgQt --prefix /usr
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
